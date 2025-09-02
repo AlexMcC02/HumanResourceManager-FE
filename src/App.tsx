@@ -1,16 +1,19 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./Home";
 import Navbar from "./Navbar";
+import CreateEmployee from "./CreateEmployee";
+import Employees from "./Employees";
 
 function App() {
   return (
-    <>
-    <Navbar/>
-      <div className="flex items-center justify-center min-h-screen bg-cover bg-center bg-black text-white">
-        <div className="text-center">
-          <h1 className="text-5xl font-bold">Human Resource Manager</h1>
-          <p className="text-xl text-red-400">This is the homepage!</p>
-        </div>
-      </div>
-    </>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/employees" element={<Employees />} />
+        <Route path="/create_employee" element={<CreateEmployee />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
