@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 function Employees() {
+  const [pageNumber, setPageNumber] = useState(1);
   const [employees, setEmployees] = useState([]);
   const [refresh, setRefresh] = useState(false);
 
@@ -18,7 +19,7 @@ function Employees() {
   };
 
   useEffect(() => {
-    fetchEmployees()
+    fetchEmployees();
   }, [employees.length, refresh]);
 
   return (
@@ -27,9 +28,10 @@ function Employees() {
         <h1 className="text-5xl font-bold">Human Resource Manager</h1>
         <p className="text-xl text-blue-400">This is the employees page!</p>
         <div className="mt-6 flex justify-start">
-          <button 
-          className="bg-gray-800 border hover:bg-gray-900 active:bg-gray-950 border-gray-700 px-4 py-2"
-          onClick={() => setRefresh(true)}>
+          <button
+            className="bg-gray-800 border hover:bg-gray-900 active:bg-gray-950 border-gray-700 px-4 py-2"
+            onClick={() => setRefresh(true)}
+          >
             Refresh
           </button>
         </div>
@@ -60,12 +62,31 @@ function Employees() {
                     {employee["jobRole"]}
                   </td>
                   <td className="px-4 py-2 border border-gray-700">
-                    {"£ "+ employee["salary"]}
+                    {"£ " + employee["salary"]}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="mt-6 flex justify-between items-center">
+          <button
+            className="bg-gray-800 border hover:bg-gray-900 active:bg-gray-950 border-gray-700 px-4 py-2"
+            onClick={() => {
+              if (pageNumber > 1) setPageNumber(pageNumber - 1);
+            }}
+          >
+            Previous Page
+          </button>
+          <p>Page {pageNumber} of 3</p>
+          <button
+            className="bg-gray-800 border hover:bg-gray-900 active:bg-gray-950 border-gray-700 px-4 py-2"
+            onClick={() => {
+              if (pageNumber < 3) setPageNumber(pageNumber + 1);
+            }}
+          >
+            Next Page
+          </button>
         </div>
       </div>
     </div>
