@@ -5,9 +5,10 @@ function Employees() {
   const [employees, setEmployees] = useState([]);
   const [refresh, setRefresh] = useState(false);
 
-  const fetchEmployees = async () => {
+  useEffect(() => {
+    const fetchEmployees = async () => {
     try {
-      const url = "http://localhost:5030/human_resource_manager/api/employees/";
+      const url = "http://localhost:5030/human_resource_manager/api/employees/?Page=" + pageNumber;
       const response = await fetch(url);
       console.log("Attempted to reach: " + url);
       const data = await response.json();
@@ -18,9 +19,8 @@ function Employees() {
     }
   };
 
-  useEffect(() => {
     fetchEmployees();
-  }, [employees.length, refresh]);
+  }, [refresh, pageNumber]);
 
   return (
     <div className="flex items-start justify-center min-h-screen bg-cover bg-center bg-black text-white">
