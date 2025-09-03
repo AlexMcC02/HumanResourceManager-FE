@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 function Employees() {
   const [employees, setEmployees] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+
   const fetchEmployees = async () => {
     try {
       const url = "http://localhost:5030/human_resource_manager/api/employees/";
@@ -16,28 +18,35 @@ function Employees() {
   };
 
   useEffect(() => {
-    if (!employees.length) fetchEmployees();
-  });
+    fetchEmployees()
+  }, [employees.length, refresh]);
 
   return (
     <div className="flex items-start justify-center min-h-screen bg-cover bg-center bg-black text-white">
       <div className="text-center mt-3">
         <h1 className="text-5xl font-bold">Human Resource Manager</h1>
         <p className="text-xl text-blue-400">This is the employees page!</p>
+        <div className="mt-6 flex justify-start">
+          <button 
+          className="bg-gray-800 border hover:bg-gray-900 active:bg-gray-950 border-gray-700 px-4 py-2"
+          onClick={() => setRefresh(true)}>
+            Refresh
+          </button>
+        </div>
         <div className="overflow-x-auto mt-6">
           <table className="min-w-full border border-gray-700 text-white">
             <thead className="bg-gray-800">
               <tr>
-                <th className="px-4 py-2 border border-gray-700">First Name</th>
-                <th className="px-4 py-2 border border-gray-700">Last Name</th>
-                <th className="px-4 py-2 border border-gray-700">Band</th>
-                <th className="px-4 py-2 border border-gray-700">Job Role</th>
-                <th className="px-4 py-2 border border-gray-700">Salary</th>
+                <th className="px-8 py-2 border border-gray-700">First Name</th>
+                <th className="px-8 py-2 border border-gray-700">Last Name</th>
+                <th className="px-8 py-2 border border-gray-700">Band</th>
+                <th className="px-16 py-2 border border-gray-700">Job Role</th>
+                <th className="px-8 py-2 border border-gray-700">Salary</th>
               </tr>
             </thead>
             <tbody>
               {employees.map((employee, idx) => (
-                <tr key={idx} className="hover:bg-gray-700">
+                <tr key={idx} className="hover:bg-gray-600">
                   <td className="px-4 py-2 border border-gray-700">
                     {employee["firstName"]}
                   </td>
@@ -51,7 +60,7 @@ function Employees() {
                     {employee["jobRole"]}
                   </td>
                   <td className="px-4 py-2 border border-gray-700">
-                    {employee["salary"]}
+                    {"£ "+ employee["salary"]}
                   </td>
                 </tr>
               ))}
