@@ -15,6 +15,7 @@ function Login() {
       });
 
       console.log("JWT Token:", response.data.jwt);
+      localStorage.setItem("jwt_token", response.data.jwt)
     } catch (error) {
       console.error("Login failed", error);
     }
