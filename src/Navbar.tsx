@@ -1,4 +1,12 @@
+import { useEffect, useState } from "react";
+
 function Navbar() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setIsLoggedIn(!!localStorage.getItem("jwt_token"));
+  }, []);
+
   return (
     <>
       <div className="bg-blue-600 min-h-12 flex items-center justify-center">
@@ -6,8 +14,9 @@ function Navbar() {
           <a href="/">Home</a>
           <a href="/employees">Employees</a>
           <a href="/create_employee">Create Employee</a>
-          <a href="/login">Login</a>
-          <a>My Account</a>
+          { !isLoggedIn && <a href="/login">Login</a>}
+          { isLoggedIn && <a href="/logout">Logout</a>}
+          {isLoggedIn && <a>My Account</a>}
         </div>
       </div>
     </>
