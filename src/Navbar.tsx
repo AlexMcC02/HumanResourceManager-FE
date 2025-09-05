@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     setIsLoggedIn(!!localStorage.getItem("jwt_token"));
-  }, []);
+  }, [navigate]);
 
   return (
     <>
