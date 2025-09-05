@@ -1,9 +1,12 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -16,6 +19,7 @@ function Login() {
 
       console.log("JWT Token:", response.data.jwt);
       localStorage.setItem("jwt_token", response.data.jwt)
+      navigate("/")
     } catch (error) {
       console.error("Login failed", error);
     }

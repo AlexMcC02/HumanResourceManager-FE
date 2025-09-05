@@ -14,8 +14,8 @@ function Navbar() {
           <a href="/">Home</a>
           <a href="/employees">Employees</a>
           <a href="/create_employee">Create Employee</a>
-          { !isLoggedIn && <a href="/login">Login</a>}
-          { isLoggedIn && <a href="/logout">Logout</a>}
+          {!isLoggedIn && <a href="/login">Login</a>}
+          {isLoggedIn && <a href="/logout">Logout</a>}
           {isLoggedIn && <a>My Account</a>}
         </div>
       </div>
