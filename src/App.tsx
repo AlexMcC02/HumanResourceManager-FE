@@ -3,6 +3,7 @@ import Home from "./Home";
 import Navbar from "./Navbar";
 import CreateEmployee from "./CreateEmployee";
 import Employees from "./Employees";
+import Login from "./Login";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/employees" element={<Employees />} />
         <Route path="/create_employee" element={<CreateEmployee />} />
+        <Route path="/login" element={<Login/>}/>
       </Routes>
     </BrowserRouter>
   );

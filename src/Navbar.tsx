@@ -6,7 +6,7 @@ function Navbar() {
           <a href="/">Home</a>
           <a href="/employees">Employees</a>
           <a href="/create_employee">Create Employee</a>
-          <a>Login</a>
+          <a href="/login">Login</a>
           <a>My Account</a>
         </div>
       </div>
