@@ -6,6 +6,7 @@ import Employees from "./Employees";
 import Login from "./Login";
 import Logout from "./Logout";
 import Employee from "./Employee";
+import EditEmployee from "./EditEmployee";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/employees" element={<Employees />} />
         <Route path="/employees/:id" element={<Employee />} />
         <Route path="/create_employee" element={<CreateEmployee />} />
+        <Route path="/edit_employee/:id" element={<EditEmployee />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
       </Routes>

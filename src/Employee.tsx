@@ -22,7 +22,7 @@ function Employee() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchEmployees = async () => {
+    const fetchEmployee = async () => {
       try {
         const url =
           "http://localhost:5030/human_resource_manager/api/employees/" + id;
@@ -36,7 +36,7 @@ function Employee() {
       }
     };
 
-    fetchEmployees();
+    fetchEmployee();
   }, [id]);
 
   const deleteEmployee = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -97,9 +97,11 @@ function Employee() {
           </div>
           <hr className="border-gray-600 my-4"></hr>
           <div className="mt-4 flex justify-between items-center">
-            <button className="bg-blue-800 border hover:bg-blue-900 active:bg-blue-950 border-blue-700 px-4 py-2">
+            <a
+            href={`/edit_employee/${id}`} 
+            className="bg-blue-800 border hover:bg-blue-900 active:bg-blue-950 border-blue-700 px-4 py-2">
               Edit Details
-            </button>
+            </a>
             <button
               className="bg-red-800 border hover:bg-red-900 active:bg-red-950 border-red-700 px-4 py-2"
               onClick={deleteEmployee}
