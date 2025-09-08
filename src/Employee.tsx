@@ -1,5 +1,6 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 type Employee = {
   firstName: string;
@@ -17,6 +18,8 @@ function Employee() {
     1: "Associate",
     2: "Manager",
   };
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -36,6 +39,26 @@ function Employee() {
     fetchEmployees();
   }, [id]);
 
+  const deleteEmployee = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.delete(
+        "http://localhost:5030/human_resource_manager/api/delete_employee/" +
+          id,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
+          },
+        }
+      );
+      console.log("Delete employee response", response);
+      navigate("/employees");
+    } catch (error) {
+      console.error("Could not create employee", error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-white flex flex-col items-center">
       <div className="text-center mt-3">
@@ -47,8 +70,8 @@ function Employee() {
       <div className="flex-grow flex items-center justify-center w-full">
         <div className="border-gray-700 border-1 p-5">
           <div className="text-center">
-            <h1 className="text-2xl pb-4">Employee Details</h1>
-            <hr className="border-gray-600 pb-4"></hr>
+            <h1 className="text-2xl">Employee Details</h1>
+            <hr className="border-gray-600 my-4"></hr>
           </div>
           <div className="pr-50 space-y-4">
             <p>
@@ -71,6 +94,18 @@ function Employee() {
               <strong>Salary: £ </strong>
               {employee?.salary}
             </p>
+          </div>
+          <hr className="border-gray-600 my-4"></hr>
+          <div className="mt-4 flex justify-between items-center">
+            <button className="bg-blue-800 border hover:bg-blue-900 active:bg-blue-950 border-blue-700 px-4 py-2">
+              Edit Details
+            </button>
+            <button
+              className="bg-red-800 border hover:bg-red-900 active:bg-red-950 border-red-700 px-4 py-2"
+              onClick={deleteEmployee}
+            >
+              Delete Employee
+            </button>
           </div>
         </div>
       </div>

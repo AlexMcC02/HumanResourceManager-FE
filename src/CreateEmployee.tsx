@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function CreateEmployee() {
   const [firstName, setFirstName] = useState("");
@@ -7,6 +8,8 @@ function CreateEmployee() {
   const [band, setBand] = useState(0); // 0 - Trainee, 1 - Associate, 2 - Manager
   const [jobRole, setJobRole] = useState("");
   const [salary, setSalary] = useState(0);
+
+  const navigate = useNavigate();
 
   const createNewEmployee = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,6 +30,7 @@ function CreateEmployee() {
       );
 
       console.log("Create employee response", response.data);
+      navigate("/employees")
     } catch (error) {
       console.error("Could not create employee", error);
     }
