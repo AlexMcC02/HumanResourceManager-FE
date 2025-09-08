@@ -35,7 +35,7 @@ function CreateEmployee() {
   return (
     <div className="flex flex-col items-center justify-start min-h-screen bg-cover bg-center bg-black text-white">
       <div className="text-center mt-3">
-        <h1 className="text-5xl font-bold">Human Resource Manager</h1>
+        <h1 className="text-5xl font-bold mt-16">Human Resource Manager</h1>
         <p className="text-xl text-green-400">
           This is the create employee page!
         </p>

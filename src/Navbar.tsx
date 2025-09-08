@@ -12,7 +12,7 @@ function Navbar() {
 
   return (
     <>
-      <div className="bg-blue-600 min-h-12 flex items-center justify-center">
+      <div className="flex items-center justify-center bg-blue-600 h-12 fixed w-full">
         <div className="space-x-4 text-white">
           <a href="/">Home</a>
           <a href="/employees">Employees</a>

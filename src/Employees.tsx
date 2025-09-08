@@ -25,7 +25,7 @@ function Employees() {
   return (
     <div className="flex items-start justify-center min-h-screen bg-cover bg-center bg-black text-white">
       <div className="text-center mt-3">
-        <h1 className="text-5xl font-bold">Human Resource Manager</h1>
+        <h1 className="text-5xl font-bold mt-16">Human Resource Manager</h1>
         <p className="text-xl text-blue-400">This is the employees page!</p>
         <div className="mt-6 flex justify-start">
           <button
@@ -49,8 +49,8 @@ function Employees() {
             <tbody>
               {employees.map((employee, idx) => (
                 <tr key={idx} className="hover:bg-gray-600">
-                  <td className="px-4 py-2 border border-gray-700">
-                    {employee["firstName"]}
+                  <td className="cursor-pointer px-4 py-2 border border-gray-700">
+                    <a href={`/employees/${employee["id"]}`}>{employee["firstName"]}</a>
                   </td>
                   <td className="px-4 py-2 border border-gray-700">
                     {employee["secondName"]}
