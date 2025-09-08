@@ -4,20 +4,27 @@ function Employees() {
   const [pageNumber, setPageNumber] = useState(1);
   const [employees, setEmployees] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const bandMap: { [key: number]: string } = {
+    0: "Trainee",
+    1: "Associate",
+    2: "Manager",
+  };
 
   useEffect(() => {
     const fetchEmployees = async () => {
-    try {
-      const url = "http://localhost:5030/human_resource_manager/api/employees/?Page=" + pageNumber;
-      const response = await fetch(url);
-      console.log("Attempted to reach: " + url);
-      const data = await response.json();
-      console.log("Fetched employees:" + data);
-      setEmployees(data);
-    } catch (error) {
-      console.error("Error fetching employees:" + error);
-    }
-  };
+      try {
+        const url =
+          "http://localhost:5030/human_resource_manager/api/employees/?Page=" +
+          pageNumber;
+        const response = await fetch(url);
+        console.log("Attempted to reach: " + url);
+        const data = await response.json();
+        console.log("Fetched employees:" + data);
+        setEmployees(data);
+      } catch (error) {
+        console.error("Error fetching employees:" + error);
+      }
+    };
 
     fetchEmployees();
   }, [refresh, pageNumber]);
@@ -50,13 +57,15 @@ function Employees() {
               {employees.map((employee, idx) => (
                 <tr key={idx} className="hover:bg-gray-600">
                   <td className="cursor-pointer px-4 py-2 border border-gray-700">
-                    <a href={`/employees/${employee["id"]}`}>{employee["firstName"]}</a>
+                    <a href={`/employees/${employee["id"]}`}>
+                      {employee["firstName"]}
+                    </a>
                   </td>
                   <td className="px-4 py-2 border border-gray-700">
                     {employee["secondName"]}
                   </td>
                   <td className="px-4 py-2 border border-gray-700">
-                    {employee["band"]}
+                    {employee ? bandMap[Number(employee["band"])] : ""}
                   </td>
                   <td className="px-4 py-2 border border-gray-700">
                     {employee["jobRole"]}
