@@ -1,8 +1,9 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const [errorMessage, setErrorMessage] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -21,7 +22,10 @@ function Login() {
       localStorage.setItem("jwt_token", response.data.jwt)
       navigate("/")
     } catch (error) {
-      console.error("Login failed", error);
+      const axiosError = error as AxiosError<{error: string}>
+      const message = axiosError.response?.data.error ?? "An unexpected error occurred!";
+      setErrorMessage(message);
+      console.error("Login failed", axiosError.response?.data.error);
     }
   };
 
@@ -62,7 +66,7 @@ function Login() {
             />
           </div>
           <hr className="border-gray-700"></hr>
-          <p className="text-red-400"><strong>Invalid inputs:</strong> This is a placeholder...</p>
+          {errorMessage && <p className="text-red-400"><strong>Invalid inputs:</strong> {errorMessage}</p>}
           <button className="bg-gray-800 border hover:bg-gray-900 active:bg-gray-950 border-gray-700 px-4 py-2">
             Login
           </button>
