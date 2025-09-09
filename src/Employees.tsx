@@ -57,7 +57,9 @@ function Employees() {
               {employees.map((employee, idx) => (
                 <tr key={idx} className="hover:bg-gray-600">
                   <td className="cursor-pointer px-4 py-2 border border-gray-700">
-                    <a href={`/employees/${employee["id"]}`}>
+                    <a 
+                    className="text-blue-200 text-decoration-line: underline"
+                    href={`/employees/${employee["id"]}`}>
                       {employee["firstName"]}
                     </a>
                   </td>
