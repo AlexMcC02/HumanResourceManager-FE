@@ -37,7 +37,7 @@ function Login() {
           This is the login page!
         </p>
       </div>
-      <div className="mt-6">
+      <div className="mt-6 min-w-1/5 max-w-1/5">
         <form className="border border-gray-700 px-4 py-4 space-y-4"
         onSubmit={handleLogin}>
           <div className="flex justify-between items-center">

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -11,8 +11,9 @@ type Employee = {
 };
 
 function EditEmployee() {
-  const [existingEmployeeData, setExistingEmployeeData] = useState<Employee | null>(null);
-
+  const [existingEmployeeData, setExistingEmployeeData] =
+    useState<Employee | null>(null);
+  const [errorMessage, setErrorMessage] = useState("");
   const { id } = useParams();
   const [firstName, setFirstName] = useState("");
   const [secondName, setSecondName] = useState("");
@@ -45,7 +46,8 @@ function EditEmployee() {
 
     try {
       const response = await axios.put(
-        "http://localhost:5030/human_resource_manager/api/modify_employee/" + id,
+        "http://localhost:5030/human_resource_manager/api/modify_employee/" +
+          id,
         {
           firstName: firstName,
           secondName: secondName,
@@ -63,6 +65,10 @@ function EditEmployee() {
       console.log("Create employee response", response.data);
       navigate("/employees");
     } catch (error) {
+      const axiosError = error as AxiosError<{ error: string }>;
+      const message =
+        axiosError.response?.data.error ?? "An unexpected error occurred!";
+      setErrorMessage(message);
       console.error("Could not create employee", error);
     }
   };
@@ -73,7 +79,7 @@ function EditEmployee() {
         <h1 className="text-5xl font-bold mt-16">Human Resource Manager</h1>
         <p className="text-xl text-teal-400">This is the edit employee page!</p>
       </div>
-      <div className="mt-6">
+      <div className="mt-6 min-w-1/5 max-w-1/5">
         <form
           className="border border-gray-700 px-4 py-4 space-y-4"
           onSubmit={editEmployee}
@@ -140,13 +146,15 @@ function EditEmployee() {
               name="salary"
               placeholder={existingEmployeeData?.salary.toString()}
               value={salary}
-              onChange={(e) => setSalary((e.target.value))}
+              onChange={(e) => setSalary(e.target.value)}
             />
           </div>
           <hr className="border-gray-700"></hr>
-          <p className="text-red-400">
-            <strong>Invalid inputs:</strong> This is a placeholder...
-          </p>
+          {errorMessage && (
+            <p className="text-red-400">
+              <strong>Invalid inputs:</strong> {errorMessage}
+            </p>
+          )}
           <button className="bg-gray-800 border hover:bg-gray-900 active:bg-gray-950 border-gray-700 px-4 py-2">
             Edit Employee
           </button>

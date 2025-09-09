@@ -1,8 +1,9 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function CreateEmployee() {
+  const [errorMessage, setErrorMessage] = useState("");
   const [firstName, setFirstName] = useState("");
   const [secondName, setSecondName] = useState("");
   const [band, setBand] = useState(0); // 0 - Trainee, 1 - Associate, 2 - Manager
@@ -24,14 +25,20 @@ function CreateEmployee() {
           jobRole: jobRole,
           salary: salary,
         },
-        {headers: {
-          Authorization: `Bearer ${localStorage.getItem("jwt_token")}`
-        }}
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwt_token")}`,
+          },
+        }
       );
 
       console.log("Create employee response", response.data);
-      navigate("/employees")
+      navigate("/employees");
     } catch (error) {
+      const axiosError = error as AxiosError<{ error: string }>;
+      const message =
+        axiosError.response?.data.error ?? "An unexpected error occurred!";
+      setErrorMessage(message);
       console.error("Could not create employee", error);
     }
   };
@@ -44,7 +51,7 @@ function CreateEmployee() {
           This is the create employee page!
         </p>
       </div>
-      <div className="mt-6">
+      <div className="mt-6 min-w-1/5 max-w-1/5">
         <form
           className="border border-gray-700 px-4 py-4 space-y-4"
           onSubmit={createNewEmployee}
@@ -115,9 +122,11 @@ function CreateEmployee() {
             />
           </div>
           <hr className="border-gray-700"></hr>
-          <p className="text-red-400">
-            <strong>Invalid inputs:</strong> This is a placeholder...
-          </p>
+          {errorMessage && (
+            <p className="text-red-400">
+              <strong>Invalid inputs:</strong> {errorMessage}
+            </p>
+          )}
           <button className="bg-gray-800 border hover:bg-gray-900 active:bg-gray-950 border-gray-700 px-4 py-2">
             Create Employee
           </button>
